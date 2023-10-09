@@ -10,7 +10,7 @@ export default function App() {
 }
 
 function Counter() {
-  const [slider, setSlider] = useState(1)
+  const [step, setstep] = useState(0)
   const [count, setCount] = useState(1)
   // const Dates = Date().getUTCDate()
   const dates = new Date()
@@ -18,10 +18,10 @@ function Counter() {
 
   // const stepDown = () => setStep();
   // const stepUp = () => setStep((s) => s + 1);
-  const countDown = () => setCount((c) => c - slider)
-  const countUp = () => setCount((c) => c + slider)
-  const sliderValue = (e) => setSlider(Number(e.target.value))
-  const countValue = (e) => setCount(Number(e.target.value))
+  //   const countDown = () => setCount((c) => c - step)
+  //   const countUp = () => setCount((c) => c + step)
+  //   const stepValue = (e) => setstep(Number(e.target.value))
+  //   const countValue = (e) => setCount(Number(e.target.value))
 
   // function stepUp() {
   //   setStep((s) => s + 1);
@@ -43,15 +43,18 @@ function Counter() {
           type="range"
           min="0"
           max="10"
-          value={slider}
-          onChange={sliderValue}
+          value={step}
+          onChange={(e) => setstep(Number(e.target.value))}
         />
-        <span>{slider}</span>
+        <span>step: {step}</span>
       </div>
       <div>
-        <button onClick={countDown}>-</button>
-        <input value={count} onChange={countValue} />
-        <button onClick={countUp}>+</button>
+        <button onClick={() => setCount((c) => c - step)}>-</button>
+        <input
+          value={count}
+          onChange={(e) => setCount(Number(e.target.value))}
+        />
+        <button onClick={() => setCount((c) => c + step)}>+</button>
       </div>
 
       <p>
@@ -61,6 +64,17 @@ function Counter() {
           ? `${count} days from today is ${dates.toDateString()}`
           : `${Math.abs(count)} days ago is ${dates.toDateString()}`}
       </p>
+
+      {count !== 0 && (
+        <button
+          onClick={(e) => {
+            setCount(0)
+            setstep(1)
+          }}
+        >
+          RESET
+        </button>
+      )}
     </div>
   )
 }
